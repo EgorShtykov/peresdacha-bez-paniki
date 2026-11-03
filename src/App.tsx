@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import { MathBlock } from '@/components/Math'
 import { FunctionGraph } from '@/components/FunctionGraph'
+import { PracticeLab } from '@/components/PracticeLab'
 import {
   Dialog,
   DialogClose,
@@ -30,28 +31,12 @@ import {
 } from '@/components/ui/dialog'
 import { tasks, TOPICS, type Topic } from '@/data/tasks'
 import { getAnyTask, similarBySource, similarTasks } from '@/data/similarTasks'
+import { normalizeAnswer } from '@/utils/normalizeAnswer'
 
 const STORAGE_KEY = 'retake-trainer-solved-v1'
 const PRACTICE_STORAGE_KEY = 'retake-trainer-similar-v1'
 type TopicFilter = 'Все темы' | Topic
 type Feedback = 'idle' | 'correct' | 'wrong' | 'empty'
-
-function normalizeAnswer(value: string) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[−–—]/g, '-')
-    .replace(/ё/g, 'е')
-    .replace(/\s+/g, '')
-    .replace(/\*/g, '')
-    .replace(/∞/g, 'inf')
-    .replace(/∪/g, 'u')
-    .replace(/π/g, 'pi')
-    .replace(/√/g, 'sqrt')
-    .replace(/sqrt\(([^()]+)\)/g, 'sqrt$1')
-    .replace(/(?<=\d),(?=\d)/g, '.')
-    .replace(/пустоемножество|нетрешений|неткорней/g, '∅')
-}
 
 function readSolved(storageKey: string, sourceTasks: typeof tasks) {
   try {
@@ -187,6 +172,7 @@ export default function App() {
   const resetProgress = () => {
     setSolved([])
     setPracticeSolved([])
+    window.dispatchEvent(new Event('retake-reset'))
     setStreak(0)
     setTopic('Все темы')
     selectTask('v1-01')
@@ -206,6 +192,7 @@ export default function App() {
         </a>
         <nav className="main-nav" aria-label="Основная навигация">
           <a href="#trainer">Тренажёр</a>
+          <a href="#practice">Тренировка</a>
           <a href="#topics">Темы</a>
           <a href="#plan">План</a>
         </nav>
@@ -246,7 +233,7 @@ export default function App() {
       <main>
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <p className="hero-kicker"><PencilLine size={18} aria-hidden="true" /> 40 заданий из файла + 40 похожих.</p>
+            <p className="hero-kicker"><PencilLine size={18} aria-hidden="true" /> 80 готовых заданий + бесконечные новые варианты.</p>
             <h1 id="hero-title"><span>Не зубри.</span><span>Научись решать.</span></h1>
             <div className="hero-bottom">
               <p>Разбирай каждую задачу по шагам, закрепляй похожей и превращай «не понимаю» в «могу объяснить». Пересдача — это не приговор, а ещё одна попытка, к которой ты готовишься.</p>
@@ -270,7 +257,7 @@ export default function App() {
           <div className="hero-stats" aria-label="Состав тренажёра">
             <div><strong>40</strong><span>заданий из файла</span></div>
             <div><strong>40</strong><span>похожих для закрепления</span></div>
-            <div><strong>∞</strong><span>попыток без оценок</span></div>
+            <div><strong>∞</strong><span>новых вариантов по темам</span></div>
           </div>
         </section>
 
@@ -423,6 +410,8 @@ export default function App() {
           </div>
         </section>
 
+        <PracticeLab />
+
         <section id="topics" className="topics-section" aria-labelledby="topics-title">
           <div className="topics-intro">
             <p className="section-label">Карта тем</p>
@@ -474,7 +463,7 @@ export default function App() {
 
       <footer>
         <a href="#top" className="footer-brand">Пересдача без паники <ArrowUpRight size={18} aria-hidden="true" /></a>
-        <p>80 заданий · подсказки · пошаговые разборы</p>
+        <p>80 готовых заданий · генератор вариантов · пошаговые разборы</p>
         <p>Прогресс хранится только в этом браузере и не синхронизируется между устройствами.</p>
       </footer>
 
@@ -482,7 +471,7 @@ export default function App() {
         <DialogContent className="reset-dialog">
           <DialogHeader>
             <DialogTitle className="dialog-title">Начать прогресс заново?</DialogTitle>
-            <DialogDescription className="dialog-description">Отметки об исходных и похожих решённых заданиях будут удалены. Сами разборы останутся доступны.</DialogDescription>
+            <DialogDescription className="dialog-description">Отметки об исходных, похожих и сгенерированных решённых заданиях будут удалены. Сами разборы останутся доступны.</DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <DialogClose asChild><button type="button" className="dialog-cancel">Отмена</button></DialogClose>
