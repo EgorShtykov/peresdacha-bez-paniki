@@ -3,48 +3,49 @@ import type { GraphSpec } from '@/data/practiceGenerators'
 
 export function PracticeGraph({ spec }: { spec: GraphSpec }) {
   const titleId = useId()
-  const width = 460
-  const height = 320
-  const padding = { left: 52, right: 22, top: 22, bottom: 46 }
-  const xMin = Math.min(...spec.points.map(([x]) => x))
-  const xMax = Math.max(...spec.points.map(([x]) => x))
-  const rawYMin = Math.min(...spec.points.map(([, y]) => y))
-  const rawYMax = Math.max(...spec.points.map(([, y]) => y))
-  const yPadding = Math.max(1, (rawYMax - rawYMin) * 0.16)
-  const yMin = rawYMin - yPadding
-  const yMax = rawYMax + yPadding
-  const plotWidth = width - padding.left - padding.right
-  const plotHeight = height - padding.top - padding.bottom
-  const x = (value: number) => padding.left + ((value - xMin) / Math.max(1, xMax - xMin)) * plotWidth
-  const y = (value: number) => padding.top + ((yMax - value) / Math.max(1, yMax - yMin)) * plotHeight
-  const polyline = spec.points.map(([px, py]) => `${x(px)},${y(py)}`).join(' ')
-  const yTicks = Array.from({ length: 5 }, (_, index) => yMin + ((yMax - yMin) * index) / 4).reverse()
-  const formatTick = (value: number) => Math.abs(value) >= 100 ? Math.round(value).toString() : value.toFixed(1).replace('.', ',').replace(',0', '')
+  const width = 400
+  const height = 330
+  const left = 30
+  const right = 372
+  const top = 18
+  const bottom = 296
+  const xMin = -4.5
+  const xMax = 4.5
+  const values = spec.points.map((point) => point[1])
+  const yMin = Math.min(-1, Math.floor(Math.min(...values) - 0.7))
+  const yMax = Math.max(1, Math.ceil(Math.max(...values) + 0.7))
+  const sx = (x: number) => left + ((x - xMin) / (xMax - xMin)) * (right - left)
+  const sy = (y: number) => bottom - ((y - yMin) / (yMax - yMin)) * (bottom - top)
+  const point = (x: number, y: number) => `${sx(x).toFixed(2)},${sy(y).toFixed(2)}`
+  const path = spec.points.map(([x, y], index) => `${index === 0 ? 'M' : 'L'} ${point(x, y)}`).join(' ')
+  const yTicks = Array.from({ length: yMax - yMin + 1 }, (_, index) => yMin + index)
 
   return (
-    <figure className="function-graph">
+    <figure className="function-graph" aria-label="График сгенерированной функции">
       <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={titleId}>
-        <title id={titleId}>График к условию сгенерированного задания</title>
-        {yTicks.map((tick) => (
-          <g key={tick}>
-            <line className="graph-grid" x1={padding.left} y1={y(tick)} x2={width - padding.right} y2={y(tick)} />
-            <text className="graph-number" x={padding.left - 9} y={y(tick) + 4} textAnchor="end">{formatTick(tick)}</text>
-          </g>
+        <title id={titleId}>График функции y = f(x) с новыми параметрами</title>
+        <rect x="0" y="0" width={width} height={height} fill="var(--graph-bg)" />
+        {Array.from({ length: 9 }, (_, index) => index - 4).map((x) => (
+          <line key={`gx-${x}`} x1={sx(x)} y1={top} x2={sx(x)} y2={bottom} className="graph-grid" />
         ))}
-        {spec.points.map(([px]) => (
-          <g key={px}>
-            <line className="graph-grid" x1={x(px)} y1={padding.top} x2={x(px)} y2={height - padding.bottom} />
-            <text className="graph-number" x={x(px)} y={height - 22} textAnchor="middle">{px}</text>
-          </g>
+        {yTicks.map((y) => (
+          <line key={`gy-${y}`} x1={left} y1={sy(y)} x2={right} y2={sy(y)} className="graph-grid" />
         ))}
-        <line className="graph-axis" x1={padding.left} y1={height - padding.bottom} x2={width - padding.right} y2={height - padding.bottom} />
-        <line className="graph-axis" x1={padding.left} y1={padding.top} x2={padding.left} y2={height - padding.bottom} />
-        <text className="graph-label" x={width - 18} y={height - padding.bottom - 10}>x</text>
-        <text className="graph-label" x={padding.left + 12} y={18}>y</text>
-        <polyline className="graph-curve" points={polyline} />
-        {spec.points.map(([px, py]) => <circle className="practice-graph-point" key={`${px}-${py}`} cx={x(px)} cy={y(py)} r="4" />)}
+        <line x1={left} y1={sy(0)} x2={right + 7} y2={sy(0)} className="graph-axis" />
+        <line x1={sx(0)} y1={bottom + 8} x2={sx(0)} y2={top - 4} className="graph-axis" />
+        <path d={`M ${right + 7},${sy(0)} l -7,-4 l 0,8 z`} className="graph-axis-fill" />
+        <path d={`M ${sx(0)},${top - 4} l -4,7 l 8,0 z`} className="graph-axis-fill" />
+        <text x={right - 1} y={sy(0) + 25} className="graph-label">x</text>
+        <text x={sx(0) - 20} y={top + 6} className="graph-label">y</text>
+        <text x={sx(0) - 17} y={sy(0) + 20} className="graph-number">0</text>
+        <text x={sx(1) - 4} y={sy(0) + 21} className="graph-number">1</text>
+        <text x={sx(0) - 20} y={sy(1) + 5} className="graph-number">1</text>
+        <path d={path} className="graph-curve" />
+        {spec.points.map(([x, y]) => (
+          <circle key={`${x}-${y}`} cx={sx(x)} cy={sy(y)} r="3.2" className="practice-graph-point" />
+        ))}
       </svg>
-      <figcaption>График к условию · y = f(x)</figcaption>
+      <figcaption>y = f(x)</figcaption>
     </figure>
   )
 }
