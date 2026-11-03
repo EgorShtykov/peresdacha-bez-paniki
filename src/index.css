@@ -1305,6 +1305,303 @@ footer p:last-child {
   background: var(--accent-text);
 }
 
+.practice-section {
+  padding: clamp(72px, 8vw, 120px) 5vw;
+  border-top: 1px solid var(--ink);
+  background: var(--page);
+}
+
+.practice-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  gap: 7vw;
+  align-items: end;
+  margin-bottom: 42px;
+}
+
+.practice-heading h2 {
+  margin: 0;
+  font-family: 'Manrope Variable', sans-serif;
+  font-size: clamp(2.7rem, 4.8vw, 5rem);
+  font-weight: 740;
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+.practice-heading-copy > p {
+  max-width: 52ch;
+  margin: 0 0 26px;
+  color: var(--muted);
+}
+
+.mastery-summary {
+  display: grid;
+  grid-template-columns: auto minmax(90px, 1fr);
+  gap: 8px 20px;
+  align-items: center;
+  padding-top: 18px;
+  border-top: 1px solid var(--ink);
+}
+
+.mastery-summary > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.mastery-summary strong {
+  font-family: 'Manrope Variable', sans-serif;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.mastery-summary span,
+.mastery-summary small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.mastery-summary small {
+  grid-column: 1 / -1;
+}
+
+.mastery-track {
+  height: 5px;
+  background: color-mix(in oklch, var(--ink) 16%, transparent);
+  overflow: hidden;
+}
+
+.mastery-track > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 220ms ease-out;
+}
+
+.practice-rule {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding: 16px 0;
+  border-top: 1px solid color-mix(in oklch, var(--ink) 45%, transparent);
+  border-bottom: 1px solid color-mix(in oklch, var(--ink) 45%, transparent);
+}
+
+.practice-rule svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--accent-text);
+}
+
+.practice-rule p {
+  max-width: 100ch;
+  margin: 0;
+  font-size: 13px;
+}
+
+.practice-layout {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  border: 1px solid var(--ink);
+  background: var(--surface);
+}
+
+.practice-topic-panel {
+  min-width: 0;
+  padding: 24px;
+  border-right: 1px solid var(--ink);
+  background: var(--surface-soft);
+}
+
+.practice-panel-label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.practice-topic-list {
+  border-top: 1px solid var(--ink);
+}
+
+.practice-topic-list button {
+  width: 100%;
+  min-height: 58px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 8px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  transition: background 160ms ease-out, color 160ms ease-out, padding 160ms ease-out;
+}
+
+.practice-topic-list button:hover {
+  padding-left: 12px;
+  background: color-mix(in oklch, var(--page) 60%, transparent);
+}
+
+.practice-topic-list button.active {
+  background: var(--ink);
+  color: var(--surface);
+}
+
+.practice-topic-list button span {
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.practice-topic-list button small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.practice-topic-list button.active small {
+  color: var(--mist-300);
+}
+
+.practice-topic-note {
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.practice-workspace,
+.generated-task,
+.practice-controls {
+  min-width: 0;
+}
+
+.practice-controls {
+  padding: 24px clamp(20px, 3vw, 38px);
+  border-bottom: 1px solid var(--ink);
+}
+
+.practice-controls > label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.practice-controls select {
+  width: 100%;
+  min-height: 46px;
+  padding: 8px 36px 8px 12px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.practice-levels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 18px;
+  border: 1px solid var(--ink);
+}
+
+.practice-levels button {
+  min-width: 0;
+  min-height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.practice-levels button + button {
+  border-left: 1px solid var(--ink);
+}
+
+.practice-levels button:hover:not(.active) {
+  background: var(--surface-soft);
+}
+
+.practice-levels button.active {
+  background: var(--ink);
+  color: var(--surface);
+}
+
+.practice-level-description {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.generated-task {
+  padding: clamp(24px, 4vw, 52px) clamp(20px, 4vw, 56px);
+}
+
+.generated-task h3 {
+  max-width: 800px;
+  margin: 0;
+  font-family: 'Manrope Variable', sans-serif;
+  font-size: clamp(1.4rem, 2.3vw, 2rem);
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+}
+
+.generated-progress {
+  margin-top: 30px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.generated-level-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.generated-level-dots span {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.generated-level-dots span.done {
+  border-color: var(--success-600);
+  color: var(--success-600);
+  background: color-mix(in oklch, var(--success-600) 7%, var(--surface));
+}
+
+.generated-progress p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.practice-graph-point {
+  fill: var(--surface);
+  stroke: var(--ink);
+  stroke-width: 1.8;
+}
+
 @media (max-width: 1100px) {
   .hero-copy { grid-column: 1 / 8; }
   .hero-progress { grid-column: 8 / 13; }
@@ -1312,6 +1609,8 @@ footer p:last-child {
   .primary-cta { justify-self: start; }
   .progress-orbit { width: min(20vw, 190px); }
   .trainer-shell { grid-template-columns: 240px minmax(0, 1fr); }
+  .practice-layout { grid-template-columns: 250px minmax(0, 1fr); }
+  .practice-topic-panel { padding: 18px; }
   .task-sidebar { padding: 18px; }
   .topic-rows button { grid-template-columns: minmax(0, 1fr) auto 24px; }
   .topic-line { display: none; }
@@ -1339,9 +1638,12 @@ footer p:last-child {
   .vertical-note { display: none; }
   .hero-stats { grid-column: 1 / 13; }
   .hero-stats > div { flex-direction: column; gap: 8px; }
-  .trainer-section, .topics-section, .plan-section { padding-inline: 24px; }
-  .section-heading { grid-template-columns: 1fr; gap: 24px; }
-  .trainer-shell { grid-template-columns: 1fr; }
+  .trainer-section, .practice-section, .topics-section, .plan-section { padding-inline: 24px; }
+  .section-heading, .practice-heading { grid-template-columns: 1fr; gap: 24px; }
+  .trainer-shell, .practice-layout { grid-template-columns: 1fr; }
+  .practice-topic-panel { border-right: 0; border-bottom: 1px solid var(--ink); }
+  .practice-topic-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  .practice-topic-note { max-width: 48ch; }
   .task-sidebar { border-right: 0; border-bottom: 1px solid var(--ink); }
   .task-grid { grid-template-columns: repeat(10, minmax(44px, 1fr)); overflow-x: auto; padding-bottom: 4px; }
   .sidebar-progress { max-width: 420px; }
@@ -1373,9 +1675,23 @@ footer p:last-child {
   .hero-stats > div + div { padding-left: 14px; }
   .hero-stats strong { font-size: 26px; }
   .hero-stats span { font-size: 11px; line-height: 1.35; }
-  .trainer-section, .topics-section, .plan-section { padding: 64px 16px; }
-  .section-heading h2, .topics-intro h2, .plan-heading h2 { font-size: 2.65rem; }
+  .trainer-section, .practice-section, .topics-section, .plan-section { padding: 64px 16px; }
+  .section-heading h2, .practice-heading h2, .topics-intro h2, .plan-heading h2 { font-size: 2.65rem; }
   .section-heading { margin-bottom: 36px; }
+  .practice-heading { margin-bottom: 30px; }
+  .practice-heading-copy > p { font-size: 14px; }
+  .mastery-summary { gap: 8px 14px; }
+  .practice-rule { padding: 14px 0; }
+  .practice-rule p { font-size: 12px; }
+  .practice-topic-panel { padding: 16px; }
+  .practice-topic-list { grid-template-columns: 1fr; }
+  .practice-topic-list button { min-height: 52px; }
+  .practice-controls { padding: 18px; }
+  .practice-levels button { font-size: 11px; gap: 3px; padding-inline: 4px; }
+  .generated-task { padding: 24px 18px; }
+  .generated-task .task-meta { flex-direction: column; gap: 4px; }
+  .generated-level-dots { gap: 6px; }
+  .generated-level-dots span { padding-inline: 7px; }
   .task-sidebar { padding: 16px; }
   .task-grid { grid-template-columns: repeat(5, minmax(44px, 1fr)); overflow: visible; }
   .task-workspace { padding: 24px 18px; }
